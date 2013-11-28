@@ -203,10 +203,6 @@ class ImageFrame extends JFrame{
         jb_7.setBounds(30,400,180,50);
         add(jb_7);
 
-
-
-
-
         input_field = new JTextField(20);
         input_field.setText("You can input message here!...");
         input_field.setBounds(250,640,580,30);
@@ -232,17 +228,31 @@ class ImagePanel extends JPanel {
     private ServerSocket ss;
     private Image image;
     private InputStream input_stream;
-     
+    
+    static int ImageCount = 0;
+    static long current_time = 0;
+    static long last_time = 0;
+    static double fps = 0;
+
     public ImagePanel(ServerSocket ss) {  
         this.ss = ss;
     }
     
     public void getimage() throws IOException{
         Socket s = this.ss.accept();
-        System.out.println("connect success!");
+        //while(this.ss.accept)
+        if(ImageCount % 30 == 0){
+            current_time = System.currentTimeMillis();
+            if((current_time - last_time) != 0){
+                fps = 30/((double)(current_time - last_time)/1000);
+            }
+            System.out.println("Got image! fps : " + fps);
+            last_time = current_time;
+        }
         this.input_stream = s.getInputStream();
         this.image = ImageIO.read(input_stream);
         this.input_stream.close();
+        ImageCount++;
     }
    
     public void paintComponent(Graphics g){  
