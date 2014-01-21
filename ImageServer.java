@@ -15,11 +15,14 @@ import javax.swing.*;
 import java.net.Socket;
 import java.net.ServerSocket;
 
-public class ImageServer {  
-    public static ServerSocket ss = null;
-    
+public class ImageServer {
+	public static ServerSocket ss = null;
+	public static ServerSocket ss2 = null;
     public static void main(String args[]) throws IOException{
-            ImageThread imageThread = new ImageThread();
-            imageThread.start();
+        ImageThread imageThread = new ImageThread();
+        imageThread.start();
+        
+		ChatThread chatThread = new ChatThread();
+        chatThread.start();
     }
 }
