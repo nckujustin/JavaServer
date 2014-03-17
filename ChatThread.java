@@ -7,6 +7,7 @@ import java.awt.event.*;
 
 import javax.imageio.*;
 import javax.swing.*;
+import java.net.*;
 import java.net.Socket;
 import java.net.ServerSocket;
 import java.net.InetSocketAddress;
@@ -46,47 +47,18 @@ class ChatThread extends Thread{
         System.out.println("chat success");
         System.out.println(con.getInetAddress());
         while(true){
-            //Thread.sleep(300);
             System.out.println("waiting...");
             for (long id = 0; id < 100000000; id++) {
                 
             }
             if (frame.send_flag == 1) {
                 System.out.println("1 Trying...");
-                out.write("5678".getBytes());
+                out.write(frame.send_message.getBytes());
                 out.flush();
                 frame.send_flag = 0;
                 System.out.println("1 End...");
-
-                /*for receiving*/
-                /*try{
-
-                System.out.println("1 Trying...");
-
-                BufferedReader in;
-                in = new BufferedReader (new InputStreamReader(con.getInputStream()));
-                
-                System.out.println("I got :");
-                boolean more = true;
-                while(more) {
-                    String inStr = in.readLine();
-                    if (inStr == null) {
-                      more = false;
-                    } else {
-                        System.out.println(inStr);
-                    }    
-                }
-                //ss.close();
-                con.close();
-                System.out.println("end Sending...");
-                frame.send_flag = 0;
-                }catch(IOException e){
-                    System.out.println("chat send err");
-                }*/
             }
         }
-        
-        //out.close();
     }catch(IOException e){
         System.out.println("chat connect err");
     }
@@ -121,8 +93,10 @@ class ChatFrame extends JFrame{
     //this is the textfield
     public JTextField input_field;
     public JTextField output_field;
+    public JTextField label;
 
     public static int send_flag = 0;
+    public static String send_message = "";
 
     public ChatFrame(final ServerSocket ss){
         // get screen dimensions       
@@ -163,9 +137,14 @@ class ChatFrame extends JFrame{
                 jb_up.setBackground(null);
                 jb_up.setOpaque(true);
             }
+            public void mouseClicked(MouseEvent evt){
+                send_message = "1";
+                send_flag = 1;
+                System.out.println("flag");
+            }
         });
 
-        //set the button UP
+        //set the button DOWN
         jb_down = new JButton("Down");
         //positon x, position y, size width, size height
         jb_down.setBounds(100,610,50,50);
@@ -183,9 +162,14 @@ class ChatFrame extends JFrame{
                 jb_down.setBackground(null);
                 jb_down.setOpaque(true);
             }
+            public void mouseClicked(MouseEvent evt){
+                send_message = "2";
+                send_flag = 1;
+                System.out.println("flag");
+            }
         });
 
-        //set the button UP
+        //set the button LEFT
         jb_left = new JButton("LEFT");
         //positon x, position y, size width, size height
         jb_left.setBounds(50,(510+610)/2,50,50);
@@ -203,9 +187,14 @@ class ChatFrame extends JFrame{
                 jb_left.setBackground(null);
                 jb_left.setOpaque(true);
             }
+            public void mouseClicked(MouseEvent evt){
+                send_message = "3";
+                send_flag = 1;
+                System.out.println("flag");
+            }
         });
 
-        //set the button UP
+        //set the button RIGHT
         jb_right = new JButton("RIGHT");
         //positon x, position y, size width, size height
         jb_right.setBounds(150,(510+610)/2,50,50);
@@ -223,10 +212,26 @@ class ChatFrame extends JFrame{
                 jb_right.setBackground(null);
                 jb_right.setOpaque(true);
             }
+            public void mouseClicked(MouseEvent evt){
+                send_message = "4";
+                send_flag = 1;
+                System.out.println("flag");
+            }
         });
 
-        //set the button UP
-        jb_1 = new JButton("Message1");
+        String ip = null;
+        String address = null; 
+
+        try{
+        InetAddress addr = InetAddress.getLocalHost(); 
+        ip = addr.getHostAddress().toString();
+        address = addr.getHostName().toString();
+        }catch(IOException e){
+
+        }
+
+
+        jb_1 = new JButton(ip);
         //positon x, position y, size width, size height
         jb_1.setBounds(30,40,180,50);
         add(jb_1);
@@ -234,7 +239,9 @@ class ChatFrame extends JFrame{
         jb_1.addMouseListener(new MouseAdapter()
         {
             public void mouseClicked(MouseEvent evt){
-                System.out.println("1 started");
+                send_message = "1";
+                send_flag = 1;
+                System.out.println("flag");
             }
         });
 
@@ -243,27 +250,73 @@ class ChatFrame extends JFrame{
         jb_2.setBounds(30,100,180,50);
         add(jb_2);
 
+        jb_2.addMouseListener(new MouseAdapter()
+        {
+            public void mouseClicked(MouseEvent evt){
+                send_message = "2";
+                send_flag = 1;
+                System.out.println("flag");
+            }
+        });
+
         jb_3 = new JButton("Message3");
         //positon x, position y, size width, size height
         jb_3.setBounds(30,160,180,50);
         add(jb_3);
+
+        jb_3.addMouseListener(new MouseAdapter()
+        {
+            public void mouseClicked(MouseEvent evt){
+                send_message = "3";
+                send_flag = 1;
+                System.out.println("flag");
+            }
+        });
 
         jb_4 = new JButton("Message4");
         //positon x, position y, size width, size height
         jb_4.setBounds(30,220,180,50);
         add(jb_4);
 
+        jb_4.addMouseListener(new MouseAdapter()
+        {
+            public void mouseClicked(MouseEvent evt){
+                send_message = "4";
+                send_flag = 1;
+                System.out.println("flag");
+            }
+        });
+
         jb_5 = new JButton("Message5");
         //positon x, position y, size width, size height
         jb_5.setBounds(30,280,180,50);
         add(jb_5);
+
+
+        jb_5.addMouseListener(new MouseAdapter()
+        {
+            public void mouseClicked(MouseEvent evt){
+                send_message = "5";
+                send_flag = 1;
+                System.out.println("flag");
+            }
+        });
 
         jb_6 = new JButton("Message6");
         //positon x, position y, size width, size height
         jb_6.setBounds(30,340,180,50);
         add(jb_6);
 
-        jb_7 = new JButton("Connect");
+        jb_6.addMouseListener(new MouseAdapter()
+        {
+            public void mouseClicked(MouseEvent evt){
+                send_message = "6";
+                send_flag = 1;
+                System.out.println("flag");
+            }
+        });
+
+        jb_7 = new JButton("Message7");
         //positon x, position y, size width, size height
         jb_7.setBounds(30,400,180,50);
         add(jb_7);
@@ -271,44 +324,12 @@ class ChatFrame extends JFrame{
         jb_7.addMouseListener(new MouseAdapter()
         {
             public void mouseClicked(MouseEvent evt){
+                send_message = "7";
                 send_flag = 1;
                 System.out.println("flag");
-                /*System.out.println("chat thread started");
-                try{
-                    con = ss.accept();
-                    System.out.println("chat success");
-                    System.out.println(con.getInetAddress());
-
-                    try{
-
-                        System.out.println("1 Trying...");
-
-                        BufferedReader in;
-                        in = new BufferedReader (new InputStreamReader(con.getInputStream()));
-                        
-                        System.out.println("I got :");
-                        boolean more = true;
-                        while(more) {
-                            String inStr = in.readLine();
-                            if (inStr == null) {
-                              more = false;
-                            } else {
-                                System.out.println(inStr);
-                            }    
-                        }
-                        //ss.close();
-                        con.close();
-                        System.out.println("end Sending...");
-                    }catch(IOException e){
-                        System.out.println("chat send err");
-                    }
-                    
-                    //out.close();
-                }catch(IOException e){
-                    System.out.println("chat connect err");
-                }*/
             }
         });
+        
     }
 
     public static final int DEFAULT_WIDTH = 250;

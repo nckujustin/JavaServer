@@ -5,6 +5,10 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.awt.event.*;
 
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+
 import javax.imageio.*;
 import javax.swing.*;
 import java.net.Socket;
@@ -111,7 +115,12 @@ class ImagePanel extends JPanel {
     public void paintComponent(Graphics g){  
         super.paintComponent(g);    
         if (image == null) return;
-        g.drawImage(image, 0, 0, null);
+        
+        Graphics2D g2 = (Graphics2D) g;
+        g2.rotate(Math.toRadians(90), 320, 240);
+        //g2.rotate(Math.toRadians(0),bi.getWidth(), bi.getHeight()-bi.getWidth());
+        g2.drawImage(image, 0, 0, null);
+        //g.drawImage(image, 0, 0, null);
     }
 
 }
