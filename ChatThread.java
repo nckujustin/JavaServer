@@ -83,12 +83,6 @@ class ChatFrame extends JFrame{
 
     //theses are the buttons for message
     public JButton jb_1;
-    public JButton jb_2;
-    public JButton jb_3;
-    public JButton jb_4;
-    public JButton jb_5;
-    public JButton jb_6;
-    public JButton jb_7;
 
     //this is the textfield
     public JTextField input_field;
@@ -240,91 +234,6 @@ class ChatFrame extends JFrame{
         {
             public void mouseClicked(MouseEvent evt){
                 send_message = "1";
-                send_flag = 1;
-                System.out.println("flag");
-            }
-        });
-
-        jb_2 = new JButton("Message2");
-        //positon x, position y, size width, size height
-        jb_2.setBounds(30,100,180,50);
-        add(jb_2);
-
-        jb_2.addMouseListener(new MouseAdapter()
-        {
-            public void mouseClicked(MouseEvent evt){
-                send_message = "2";
-                send_flag = 1;
-                System.out.println("flag");
-            }
-        });
-
-        jb_3 = new JButton("Message3");
-        //positon x, position y, size width, size height
-        jb_3.setBounds(30,160,180,50);
-        add(jb_3);
-
-        jb_3.addMouseListener(new MouseAdapter()
-        {
-            public void mouseClicked(MouseEvent evt){
-                send_message = "3";
-                send_flag = 1;
-                System.out.println("flag");
-            }
-        });
-
-        jb_4 = new JButton("Message4");
-        //positon x, position y, size width, size height
-        jb_4.setBounds(30,220,180,50);
-        add(jb_4);
-
-        jb_4.addMouseListener(new MouseAdapter()
-        {
-            public void mouseClicked(MouseEvent evt){
-                send_message = "4";
-                send_flag = 1;
-                System.out.println("flag");
-            }
-        });
-
-        jb_5 = new JButton("Message5");
-        //positon x, position y, size width, size height
-        jb_5.setBounds(30,280,180,50);
-        add(jb_5);
-
-
-        jb_5.addMouseListener(new MouseAdapter()
-        {
-            public void mouseClicked(MouseEvent evt){
-                send_message = "5";
-                send_flag = 1;
-                System.out.println("flag");
-            }
-        });
-
-        jb_6 = new JButton("Message6");
-        //positon x, position y, size width, size height
-        jb_6.setBounds(30,340,180,50);
-        add(jb_6);
-
-        jb_6.addMouseListener(new MouseAdapter()
-        {
-            public void mouseClicked(MouseEvent evt){
-                send_message = "6";
-                send_flag = 1;
-                System.out.println("flag");
-            }
-        });
-
-        jb_7 = new JButton("Message7");
-        //positon x, position y, size width, size height
-        jb_7.setBounds(30,400,180,50);
-        add(jb_7);
-
-        jb_7.addMouseListener(new MouseAdapter()
-        {
-            public void mouseClicked(MouseEvent evt){
-                send_message = "7";
                 send_flag = 1;
                 System.out.println("flag");
             }
