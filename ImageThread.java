@@ -68,13 +68,13 @@ class ImageFrame extends JFrame{
         this.getContentPane().setLayout(null);
         panel = new ImagePanel(ss);
         //set the size of image
-        panel.setSize(640,480); //640 480
-        panel.setLocation((DEFAULT_WIDTH-640), 110);
+        panel.setSize(620,580); //640 480
+        panel.setLocation(0, 0);
         add(panel);
     }
 
-    public static final int DEFAULT_WIDTH = 640;
-    public static final int DEFAULT_HEIGHT = 700;
+    public static final int DEFAULT_WIDTH = 620;
+    public static final int DEFAULT_HEIGHT = 580;
 }
 
 /**

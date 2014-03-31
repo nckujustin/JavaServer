@@ -7,6 +7,8 @@ import java.awt.event.*;
 
 import javax.imageio.*;
 import javax.swing.*;
+import javax.swing.text.*;
+import javax.swing.event.*;
 import java.net.*;
 import java.net.Socket;
 import java.net.ServerSocket;
@@ -20,6 +22,9 @@ import java.net.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
 
 class ChatThread extends Thread{
 
@@ -44,19 +49,24 @@ class ChatThread extends Thread{
     try{
         con = ss.accept();
         OutputStream out = con.getOutputStream();
-        System.out.println("chat success");
         System.out.println(con.getInetAddress());
         while(true){
-            System.out.println("waiting...");
             for (long id = 0; id < 100000000; id++) {
                 
             }
             if (frame.send_flag == 1) {
-                System.out.println("1 Trying...");
                 out.write(frame.send_message.getBytes());
                 out.flush();
+                System.out.println("this is 1");
                 frame.send_flag = 0;
-                System.out.println("1 End...");
+            }
+            if (frame.back_to_center == 1) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                frame.label2.setBounds(103, 398, 50, 50);
             }
         }
     }catch(IOException e){
@@ -87,10 +97,14 @@ class ChatFrame extends JFrame{
     //this is the textfield
     public JTextField input_field;
     public JTextField output_field;
-    public JTextField label;
 
+    //for ceter
+    public JLabel label2 = new JLabel();
+    
     public static int send_flag = 0;
     public static String send_message = "";
+    int str_count = 0;
+    public static int back_to_center = 0;
 
     public ChatFrame(final ServerSocket ss){
         // get screen dimensions       
@@ -111,120 +125,36 @@ class ChatFrame extends JFrame{
         //set the size of image
         panel.setSize(640,480); //640 480
         panel.setLocation((DEFAULT_WIDTH-640), 0);
-        //add(panel);
-
-        //set the button UP
-        jb_up = new JButton("UP");
-        //positon x, position y, size width, size height
-        jb_up.setBounds(100,510,50,50);
-        add(jb_up);
-
-        jb_up.addMouseListener(new MouseAdapter()
-        {
-            public void mouseEntered(MouseEvent evt)
-            {
-                jb_up.setBackground(Color.yellow);
-                jb_up.setOpaque(true);
-            }
-            public void mouseExited(MouseEvent evt)
-            {
-                jb_up.setBackground(null);
-                jb_up.setOpaque(true);
-            }
-            public void mouseClicked(MouseEvent evt){
-                send_message = "1";
-                send_flag = 1;
-                System.out.println("flag");
-            }
-        });
-
-        //set the button DOWN
-        jb_down = new JButton("Down");
-        //positon x, position y, size width, size height
-        jb_down.setBounds(100,610,50,50);
-        add(jb_down);
-
-        jb_down.addMouseListener(new MouseAdapter()
-        {
-            public void mouseEntered(MouseEvent evt)
-            {
-                jb_down.setBackground(Color.yellow);
-                jb_down.setOpaque(true);
-            }
-            public void mouseExited(MouseEvent evt)
-            {
-                jb_down.setBackground(null);
-                jb_down.setOpaque(true);
-            }
-            public void mouseClicked(MouseEvent evt){
-                send_message = "2";
-                send_flag = 1;
-                System.out.println("flag");
-            }
-        });
-
-        //set the button LEFT
-        jb_left = new JButton("LEFT");
-        //positon x, position y, size width, size height
-        jb_left.setBounds(50,(510+610)/2,50,50);
-        add(jb_left);
-
-        jb_left.addMouseListener(new MouseAdapter()
-        {
-            public void mouseEntered(MouseEvent evt)
-            {
-                jb_left.setBackground(Color.yellow);
-                jb_left.setOpaque(true);
-            }
-            public void mouseExited(MouseEvent evt)
-            {
-                jb_left.setBackground(null);
-                jb_left.setOpaque(true);
-            }
-            public void mouseClicked(MouseEvent evt){
-                send_message = "3";
-                send_flag = 1;
-                System.out.println("flag");
-            }
-        });
-
-        //set the button RIGHT
-        jb_right = new JButton("RIGHT");
-        //positon x, position y, size width, size height
-        jb_right.setBounds(150,(510+610)/2,50,50);
-        add(jb_right);
-
-        jb_right.addMouseListener(new MouseAdapter()
-        {
-            public void mouseEntered(MouseEvent evt)
-            {
-                jb_right.setBackground(Color.yellow);
-                jb_right.setOpaque(true);
-            }
-            public void mouseExited(MouseEvent evt)
-            {
-                jb_right.setBackground(null);
-                jb_right.setOpaque(true);
-            }
-            public void mouseClicked(MouseEvent evt){
-                send_message = "4";
-                send_flag = 1;
-                System.out.println("flag");
-            }
-        });
 
         String ip = null;
         String address = null; 
 
         try{
-        InetAddress addr = InetAddress.getLocalHost(); 
-        ip = addr.getHostAddress().toString();
-        address = addr.getHostName().toString();
+            InetAddress addr = InetAddress.getLocalHost(); 
+            ip = addr.getHostAddress().toString();
+            address = addr.getHostName().toString();
         }catch(IOException e){
 
         }
 
+        /*
+            Show the orientation control status.
+        */
+        ImageIcon redDot = new ImageIcon("image/Reddot.png");
+        //final JLabel label2 = new JLabel();
+        label2.setBounds(103, 398, 50, 50);
+        label2.setIcon(redDot);
+        add(label2);
 
+        ImageIcon background = new ImageIcon("image/orientPanel.jpg");
+        JLabel label = new JLabel();
+        label.setBounds(30, 320, 185, 200);
+        label.setIcon(background);
+        add(label);
+        
+        /*
+            This button guide the user to input the correct ip of computer to the cell phone.
+        */
         jb_1 = new JButton(ip);
         //positon x, position y, size width, size height
         jb_1.setBounds(30,40,180,50);
@@ -238,9 +168,62 @@ class ChatFrame extends JFrame{
                 System.out.println("flag");
             }
         });
-        
+
+        final JTextField cmd_input = new JTextField("", 25);
+        String old_string = "";
+
+        cmd_input.getDocument().addDocumentListener(new DocumentListener() {
+              public void changedUpdate(DocumentEvent e) {
+
+              }
+              public void removeUpdate(DocumentEvent e) {
+                if (str_count >= 0) {
+                    str_count --;
+                }
+              }
+              public void insertUpdate(DocumentEvent e) {
+                String inputString = cmd_input.getText();
+                char[] charArr = inputString.toCharArray();
+                char check_cmd = charArr[str_count];
+                switch(check_cmd){
+                    // right
+                    case 'e':
+                        send_message = "4";
+                        send_flag = 4;
+                        label2.setBounds(183, 398, 50, 50);
+                        back_to_center = 1;
+                        break;
+                    // left
+                    case 't':
+                        send_message = "3";
+                        send_flag = 3;
+                        label2.setBounds(23, 398, 50, 50); 
+                        back_to_center = 1;
+                        break;
+                    // up
+                    case 'i':
+                        send_message = "1";
+                        send_flag = 1;
+                        label2.setBounds(103, 318, 50, 50);
+                        break;
+                    // down
+                    case 'm':
+                        send_message = "2";
+                        send_flag = 2;
+                        label2.setBounds(103, 478, 50, 50);
+                        back_to_center = 1;
+                        break;
+                    default:
+                        break;
+                }
+                str_count ++;
+              }
+          });
+        cmd_input.setBounds(30,100,180,180);
+        add(cmd_input);
+            
     }
 
     public static final int DEFAULT_WIDTH = 250;
-    public static final int DEFAULT_HEIGHT = 700;
+    public static final int DEFAULT_HEIGHT = 580;
 }
