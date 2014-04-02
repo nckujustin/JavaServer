@@ -166,9 +166,7 @@ class ChatFrame extends JFrame{
         jb_1.addMouseListener(new MouseAdapter()
         {
             public void mouseClicked(MouseEvent evt){
-                send_message = "1";
-                send_flag = 1;
-                System.out.println("flag");
+                
             }
         });
 
@@ -193,14 +191,14 @@ class ChatFrame extends JFrame{
                         // right
                         case 'e':
                             send_message = "4";
-                            send_flag = 4;
+                            send_flag = 1;
                             label2.setBounds(183, 398, 50, 50);
                             back_to_center = 1;
                             break;
                         // left
                         case 't':
                             send_message = "3";
-                            send_flag = 3;
+                            send_flag = 1;
                             label2.setBounds(23, 398, 50, 50); 
                             back_to_center = 1;
                             break;
@@ -214,9 +212,29 @@ class ChatFrame extends JFrame{
                         // down
                         case 'm':
                             send_message = "2";
-                            send_flag = 2;
+                            send_flag = 1;
                             label2.setBounds(103, 478, 50, 50);
                             back_to_center = 1;
+                            break;
+                        //increase forward and backward speed
+                        case 'u':
+                            send_message = "5";
+                            send_flag = 1;
+                            break;
+                        //reduce forward and backward speed
+                        case 'd':
+                            send_message = "6";
+                            send_flag = 1;
+                            break;
+                        //increase rotation speed
+                        case 'c':
+                            send_message = "7";
+                            send_flag = 1;
+                            break;
+                        //reduce rotation speed
+                        case 'l':
+                            send_message = "8";
+                            send_flag = 1;
                             break;
                         default:
                             break;
