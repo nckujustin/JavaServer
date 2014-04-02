@@ -251,3 +251,11 @@ class ChatFrame extends JFrame{
     public static final int DEFAULT_WIDTH = 250;
     public static final int DEFAULT_HEIGHT = 580;
 }
+
+@SuppressWarnings("serial")
+class ImagePanel extends JPanel {     
+    private ServerSocket ss;
+    public ImagePanel(ServerSocket ss) {  
+        this.ss = ss;
+    }
+}
