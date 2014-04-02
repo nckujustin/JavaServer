@@ -67,6 +67,7 @@ class ChatThread extends Thread{
                     e.printStackTrace();
                 }
                 frame.label2.setBounds(103, 398, 50, 50);
+                frame.back_to_center = 0;
             }
         }
     }catch(IOException e){
@@ -137,6 +138,8 @@ class ChatFrame extends JFrame{
 
         }
 
+
+
         /*
             Show the orientation control status.
         */
@@ -182,39 +185,42 @@ class ChatFrame extends JFrame{
                 }
               }
               public void insertUpdate(DocumentEvent e) {
-                String inputString = cmd_input.getText();
-                char[] charArr = inputString.toCharArray();
-                char check_cmd = charArr[str_count];
-                switch(check_cmd){
-                    // right
-                    case 'e':
-                        send_message = "4";
-                        send_flag = 4;
-                        label2.setBounds(183, 398, 50, 50);
-                        back_to_center = 1;
-                        break;
-                    // left
-                    case 't':
-                        send_message = "3";
-                        send_flag = 3;
-                        label2.setBounds(23, 398, 50, 50); 
-                        back_to_center = 1;
-                        break;
-                    // up
-                    case 'i':
-                        send_message = "1";
-                        send_flag = 1;
-                        label2.setBounds(103, 318, 50, 50);
-                        break;
-                    // down
-                    case 'm':
-                        send_message = "2";
-                        send_flag = 2;
-                        label2.setBounds(103, 478, 50, 50);
-                        back_to_center = 1;
-                        break;
-                    default:
-                        break;
+                if (back_to_center == 0) {
+                    String inputString = cmd_input.getText();
+                    char[] charArr = inputString.toCharArray();
+                    char check_cmd = charArr[str_count];
+                    switch(check_cmd){
+                        // right
+                        case 'e':
+                            send_message = "4";
+                            send_flag = 4;
+                            label2.setBounds(183, 398, 50, 50);
+                            back_to_center = 1;
+                            break;
+                        // left
+                        case 't':
+                            send_message = "3";
+                            send_flag = 3;
+                            label2.setBounds(23, 398, 50, 50); 
+                            back_to_center = 1;
+                            break;
+                        // up
+                        case 'i':
+                            send_message = "1";
+                            send_flag = 1;
+                            label2.setBounds(103, 318, 50, 50);
+                            back_to_center = 1;
+                            break;
+                        // down
+                        case 'm':
+                            send_message = "2";
+                            send_flag = 2;
+                            label2.setBounds(103, 478, 50, 50);
+                            back_to_center = 1;
+                            break;
+                        default:
+                            break;
+                    }
                 }
                 str_count ++;
               }
